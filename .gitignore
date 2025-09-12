@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+.pnp/
+.pnp.js
+
+# Logs
+logs
+*.log
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.out/
+.next/
+.vite/
+.cache/
+.temp/
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# TypeScript
+*.tsbuildinfo
+
+# pnpm
+.pnpm-store/
