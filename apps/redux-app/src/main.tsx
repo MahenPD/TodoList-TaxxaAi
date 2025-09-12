@@ -19,8 +19,6 @@ function TodoList() {
     setLoading(true);
     try {
       const res = await fetch('https://api.realinspire.live/v1/quotes/random');
-      console.log(res);
-
       const data: Quote[] = await res.json();
       setQuote(data[0]);
     } catch (err) {
@@ -35,41 +33,16 @@ function TodoList() {
   }, []);
 
   return (
-    <div
-      style={{
-        marginTop: 16,
-        display: 'flex',
-        flex: 1,
-        width: '100vw',
-        height: '100vh',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <div
-        style={{
-          width: '50%',
-          maxWidth: 800,
-        }}
-      >
-        <h1 style={{ fontSize: 24, fontWeight: 'bold' }}>Your To Do</h1>
+    <div className="container">
+      <div className="content">
+        <h1 className="title">Your To Do</h1>
 
         <CustomTextInput
           placeholder="Add new task"
           onClick={(text) => dispatch(add({ text }))}
         />
 
-        <div
-          style={{
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            marginTop: 8,
-            gap: 18,
-            marginBottom: 80,
-          }}
-        >
+        <div className="ai-section">
           OR
           <Button onClick={fetchQuote} buttonTitle="GENERATE USING AI" />
         </div>
@@ -85,14 +58,7 @@ function TodoList() {
           ))}
         </AnimatePresence>
 
-        <div
-          style={{
-            fontSize: 12,
-            fontWeight: 600,
-            marginTop: 14,
-            fontStyle: 'italic',
-          }}
-        >
+        <div className="todo-remaining">
           {`Your remaining todos : ${todos.filter((f) => !f.done).length}`}
         </div>
 

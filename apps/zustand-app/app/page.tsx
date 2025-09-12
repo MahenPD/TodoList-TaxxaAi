@@ -3,6 +3,7 @@ import { CustomTextInput, ListItem, QuoteOfTheDay } from '@my/ui';
 import { useStore } from '../src/store/useStore';
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import styles from './styles.module.css';
 
 type Quote = { content: string; author: string };
 
@@ -33,25 +34,9 @@ function TodoList() {
   }, []);
 
   return (
-    <div
-      style={{
-        marginTop: 16,
-        display: 'flex',
-        flex: 1,
-        width: '100vw',
-        height: '100vh',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <div
-        style={{
-          width: '50%',
-          maxWidth: 800,
-        }}
-      >
-        <h1 style={{ fontSize: 24, fontWeight: 'bold' }}>Your To Do</h1>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Your To Do</h1>
 
         <CustomTextInput
           placeholder="Add new task"
@@ -69,14 +54,7 @@ function TodoList() {
           ))}
         </AnimatePresence>
 
-        <div
-          style={{
-            fontSize: 12,
-            fontWeight: 600,
-            marginTop: 14,
-            fontStyle: 'italic',
-          }}
-        >
+        <div className={styles.remaining}>
           {`Your remaining todos : ${todos.filter((f) => !f.done).length}`}
         </div>
 

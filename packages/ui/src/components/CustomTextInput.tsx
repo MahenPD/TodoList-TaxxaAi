@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 export const CustomTextInput = ({
   onClick,
   placeholder,
+  hideButton,
 }: {
   onClick?: (text: string) => void;
   placeholder?: string;
+  hideButton?: boolean;
 }) => {
   const [text, setText] = useState('');
 
@@ -40,22 +42,24 @@ export const CustomTextInput = ({
           fontSize: 14,
         }}
       />
-      <motion.button
-        whileHover={{ scale: 1.1, backgroundColor: '#606060' }}
-        transition={{ type: 'spring', stiffness: 300 }}
-        onClick={handleSubmit}
-        style={{
-          backgroundColor: '#505050',
-          borderWidth: 0,
-          borderRadius: 8,
-          padding: '4px 12px',
-          color: 'white',
-          fontSize: 20,
-          cursor: 'pointer',
-        }}
-      >
-        +
-      </motion.button>
+      {!hideButton && (
+        <motion.button
+          whileHover={{ scale: 1.1, backgroundColor: '#606060' }}
+          transition={{ type: 'spring', stiffness: 300 }}
+          onClick={handleSubmit}
+          style={{
+            backgroundColor: '#505050',
+            borderWidth: 0,
+            borderRadius: 8,
+            padding: '4px 12px',
+            color: 'white',
+            fontSize: 20,
+            cursor: 'pointer',
+          }}
+        >
+          +
+        </motion.button>
+      )}
     </div>
   );
 };

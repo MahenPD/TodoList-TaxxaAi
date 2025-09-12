@@ -16,7 +16,8 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@ui/*": ["packages/ui/src/*"]
+      "@ui/*": ["packages/ui/src/*"],
+      "@ai": ["packages/ai/index.ts"],
     }
   },
   "exclude": ["node_modules", "dist", ".next"]
