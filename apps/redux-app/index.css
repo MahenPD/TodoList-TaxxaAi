@@ -32,9 +32,23 @@ body {
   margin-bottom: 80px;
 }
 
+.ai-input {
+  flex: 1;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 2.5px solid #9f9f9f;
+  outline: none;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
 .todo-remaining {
   font-size: 12px;
   font-weight: 600;
   margin-top: 14px;
   font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

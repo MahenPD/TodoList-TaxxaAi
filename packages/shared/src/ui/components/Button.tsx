@@ -1,11 +1,12 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 export const Button = ({
   buttonTitle,
   onClick,
+  disabled,
 }: {
   buttonTitle: string;
+  disabled?: boolean;
   onClick?: () => void;
 }) => {
   return (
@@ -13,6 +14,7 @@ export const Button = ({
       whileHover={{ scale: 1.02, backgroundColor: '#606060' }}
       transition={{ type: 'spring', stiffness: 250 }}
       onClick={onClick}
+      disabled={disabled}
       style={{
         backgroundColor: '#505050',
         borderWidth: 0,

@@ -1,16 +1,15 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "dist",                  
+    "rootDir": "src",                  
+    "declaration": true,               
+    "declarationMap": true,
     "moduleResolution": "Node",
     "module": "ESNext",
     "target": "ESNext",
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "types": ["vite/client", "node"],
-    "paths": {
-      "shared/*": ["../../packages/shared/src/*"]
-    }
+    "types": ["node"],
+    "composite": true                  
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

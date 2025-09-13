@@ -1,37 +1,50 @@
 'use client';
-import { CustomTextInput, ListItem, QuoteOfTheDay } from '@my/ui';
-import { useStore } from '../src/store/useStore';
-import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useCallback, useMemo, useState } from 'react';
+import { useStore } from '../src/store/useStore';
 import styles from './styles.module.css';
-
-type Quote = { content: string; author: string };
+import { useQuote } from 'shared/hooks';
+import { generateTodo } from 'shared/ai';
+import { CustomTextInput, Button, ListItem, QuoteOfTheDay } from 'shared/ui';
 
 function TodoList() {
-  const [quote, setQuote] = useState<Quote>({ content: '', author: '' });
-  const [loading, setLoading] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [loadingAI, setLoadingAI] = useState(false);
 
-  const todos = useStore((s) => s.todos);
-  const add = useStore((s) => s.add);
-  const toggle = useStore((s) => s.toggle);
-  const remove = useStore((s) => s.remove);
+  const { quote, loading: quoteLoading } = useQuote();
 
-  async function fetchQuote() {
-    setLoading(true);
+  const { todos, add, toggle, remove } = useStore((state) => ({
+    todos: state.todos,
+    add: state.add,
+    toggle: state.toggle,
+    remove: state.remove,
+  }));
+
+  const remainingCount = useMemo(
+    () => todos.filter((t) => !t.done).length,
+    [todos],
+  );
+
+  const handleAIPrompt = useCallback(async () => {
+    if (!aiPrompt.trim()) return;
+    setLoadingAI(true);
     try {
-      const res = await fetch('https://api.realinspire.live/v1/quotes/random', {
-        cache: 'no-store',
-      });
-      const data: Quote[] = await res.json();
-      setQuote(data[0]);
+      setAiPrompt('');
+      const response = await generateTodo(aiPrompt);
+      response.forEach((text: string) => add(text));
+    } catch (error) {
+      console.error(error);
     } finally {
-      setLoading(false);
+      setLoadingAI(false);
     }
-  }
+  }, [aiPrompt, add]);
 
-  useEffect(() => {
-    fetchQuote();
-  }, []);
+  const handleToggle = useCallback((id: string) => toggle(id), [toggle]);
+  const handleRemove = useCallback((id: string) => remove(id), [remove]);
+
+  const handleClearAll = useCallback(() => {
+    todos.forEach((t) => remove(t.id));
+  }, [todos, remove]);
 
   return (
     <div className={styles.container}>
@@ -43,22 +56,42 @@ function TodoList() {
           onClick={(text) => add(text)}
         />
 
+        <div className={styles.aiSection}>
+          OR
+          <input
+            className={styles.aiInput}
+            value={aiPrompt}
+            type="text"
+            placeholder="Enter your prompt"
+            onChange={(e) => setAiPrompt(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleAIPrompt();
+            }}
+          />
+          <Button
+            onClick={handleAIPrompt}
+            buttonTitle={loadingAI ? 'Generating...' : 'GENERATE WITH AI'}
+            disabled={loadingAI}
+          />
+        </div>
+
         <AnimatePresence>
           {todos.map((t) => (
             <ListItem
               key={t.id}
               itemData={t}
-              onItemDone={(id) => toggle(id)}
-              onItemRemove={(id) => remove(id)}
+              onItemDone={handleToggle}
+              onItemRemove={handleRemove}
             />
           ))}
         </AnimatePresence>
 
         <div className={styles.remaining}>
-          {`Your remaining todos : ${todos.filter((f) => !f.done).length}`}
+          {`Your remaining todos: ${remainingCount}`}
+          <Button buttonTitle="Clear All" onClick={handleClearAll} />
         </div>
 
-        <QuoteOfTheDay loading={loading} quote={quote} />
+        <QuoteOfTheDay loading={quoteLoading} quote={quote} />
       </div>
     </div>
   );

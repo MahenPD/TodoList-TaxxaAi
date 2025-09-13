@@ -3,12 +3,16 @@ import { motion } from 'framer-motion';
 
 export const CustomTextInput = ({
   onClick,
+  onChange,
   placeholder,
   hideButton,
+  buttonText,
 }: {
   onClick?: (text: string) => void;
+  onChange?: (text: string) => void;
   placeholder?: string;
   hideButton?: boolean;
+  buttonText?: string;
 }) => {
   const [text, setText] = useState('');
 
@@ -42,9 +46,10 @@ export const CustomTextInput = ({
           fontSize: 14,
         }}
       />
+
       {!hideButton && (
         <motion.button
-          whileHover={{ scale: 1.1, backgroundColor: '#606060' }}
+          whileHover={{ scale: 1.03, backgroundColor: '#606060' }}
           transition={{ type: 'spring', stiffness: 300 }}
           onClick={handleSubmit}
           style={{
@@ -57,7 +62,7 @@ export const CustomTextInput = ({
             cursor: 'pointer',
           }}
         >
-          +
+          {buttonText || '+'}
         </motion.button>
       )}
     </div>

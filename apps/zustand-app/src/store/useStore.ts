@@ -18,7 +18,7 @@ export const useStore = create<State>()(
           set((state) => ({
             todos: [
               ...state.todos,
-              { id: Date.now().toString(), text, done: false },
+              { id: Math.random().toString(24), text, done: false },
             ],
           })),
         toggle: (id: string) =>

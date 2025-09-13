@@ -7,7 +7,7 @@ export const QuoteOfTheDay = ({
   quote,
   loading,
 }: {
-  quote: Quote;
+  quote: Quote | null;
   loading: boolean;
 }) => {
   return (

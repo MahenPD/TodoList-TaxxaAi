@@ -15,10 +15,14 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
+    "types": ["node"],
     "paths": {
-      "@ui/*": ["packages/ui/src/*"],
-      "@ai": ["packages/ai/index.ts"],
+      "shared/*": ["packages/shared/src/*"]
     }
   },
+  "include": [
+    "apps/**/*",
+    "packages/**/*"
+  ],
   "exclude": ["node_modules", "dist", ".next"]
 }

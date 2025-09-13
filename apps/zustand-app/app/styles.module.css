@@ -24,4 +24,27 @@
   font-weight: 600;
   margin-top: 14px;
   font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aiSection {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.aiInput {
+  flex: 1;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 2.5px solid #9f9f9f;
+  outline: none;
+  padding: 6px 8px;
+  font-size: 14px;
 }

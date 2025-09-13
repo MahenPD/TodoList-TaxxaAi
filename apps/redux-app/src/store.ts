@@ -8,7 +8,7 @@ const todosSlice = createSlice({
   reducers: {
     add: (state, action: PayloadAction<{ text: string }>) => {
       state.push({
-        id: Date.now().toString(),
+        id: Math.random().toString(24),
         text: action.payload.text,
         done: false,
       });
