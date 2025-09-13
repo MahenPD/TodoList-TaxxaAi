@@ -20,7 +20,7 @@ export const QuoteOfTheDay = ({
         Motivation for the Day
       </div>
 
-      {loading && <p>Loading...</p>}
+      {loading && <p style={{ color: '#9F9F9F' }}>Loading...</p>}
 
       {quote && (
         <blockquote style={{ margin: 0, color: '#9F9F9F' }}>

@@ -2,7 +2,14 @@ import { AnimatePresence } from 'framer-motion';
 import { useCallback, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { Button, CustomTextInput, ListItem, QuoteOfTheDay } from 'shared/ui';
+import {
+  AiTextInput,
+  Button,
+  CountRenders,
+  CustomTextInput,
+  ListItem,
+  QuoteOfTheDay,
+} from 'shared/ui';
 import { useQuote } from 'shared//hooks';
 import { generateTodo } from 'shared//ai';
 import '../index.css';
@@ -11,19 +18,24 @@ import { add, remove, RootState, store, toggle } from './store';
 function TodoList() {
   const todos = useSelector((s: RootState) => s.todos);
   const dispatch = useDispatch();
+  const [loadingAI, setLoadingAI] = useState(false);
   const { quote, loading } = useQuote();
-  const [aiPrompt, setAiPrompt] = useState('');
 
-  const handleAIPrompt = useCallback(async () => {
-    if (!aiPrompt.trim()) return;
-    try {
-      setAiPrompt('');
-      const todosFromAI = await generateTodo(aiPrompt);
-      todosFromAI.forEach((text) => dispatch(add({ text })));
-    } catch (err) {
-      console.error(err);
-    }
-  }, [aiPrompt, dispatch]);
+  const handleAIPrompt = useCallback(
+    async (aiPrompt: string) => {
+      setLoadingAI(true);
+
+      try {
+        const todosFromAI = await generateTodo(aiPrompt);
+        todosFromAI.forEach((text) => dispatch(add({ text })));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoadingAI(false);
+      }
+    },
+    [dispatch],
+  );
 
   const handleRemove = useCallback(
     (id: string) => dispatch(remove({ id })),
@@ -37,6 +49,7 @@ function TodoList() {
 
   return (
     <div className="container">
+      <CountRenders label="React / Redux App" />
       <div className="content">
         <h1 className="title">Your To Do</h1>
 
@@ -47,14 +60,12 @@ function TodoList() {
 
         <div className="ai-section">
           OR
-          <input
-            className="ai-input"
-            value={aiPrompt}
+          <AiTextInput
             placeholder="Enter your prompt"
-            onChange={(e) => setAiPrompt(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleAIPrompt()}
+            onClick={handleAIPrompt}
+            buttonText={loadingAI ? 'Generating...' : 'GENERATE WITH AI'}
+            disabled={loadingAI}
           />
-          <Button onClick={handleAIPrompt} buttonTitle="GENERATE WITH AI" />
         </div>
 
         <AnimatePresence>
