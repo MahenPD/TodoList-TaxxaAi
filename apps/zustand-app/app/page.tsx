@@ -20,10 +20,7 @@ function TodoList() {
     remove: state.remove,
   }));
 
-  const remainingCount = useMemo(
-    () => todos.filter((t) => !t.done).length,
-    [todos],
-  );
+  const remainingTodos = useMemo(() => todos.filter((t) => !t.done), [todos]);
 
   const handleAIPrompt = useCallback(async () => {
     if (!aiPrompt.trim()) return;
@@ -87,7 +84,7 @@ function TodoList() {
         </AnimatePresence>
 
         <div className={styles.remaining}>
-          {`Your remaining todos: ${remainingCount}`}
+          {`Your remaining todos: ${remainingTodos.length}`}
           <Button buttonTitle="Clear All" onClick={handleClearAll} />
         </div>
 

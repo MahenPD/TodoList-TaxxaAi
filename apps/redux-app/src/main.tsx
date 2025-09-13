@@ -50,7 +50,7 @@ function TodoList() {
           <input
             className="ai-input"
             value={aiPrompt}
-            placeholder="Enter Prompt"
+            placeholder="Enter your prompt"
             onChange={(e) => setAiPrompt(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleAIPrompt()}
           />
@@ -69,7 +69,7 @@ function TodoList() {
         </AnimatePresence>
 
         <div className="todo-remaining">
-          {`Remaining: ${remainingTodos.length}`}
+          {`Your remaining todos: ${remainingTodos.length}`}
           <Button
             buttonTitle="Clear All"
             onClick={() => todos.forEach((t) => dispatch(remove({ id: t.id })))}
