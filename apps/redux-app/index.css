@@ -54,6 +54,7 @@ body {
   align-items: center;
 }
 
+/* Mobile */
 @media (max-width: 600px) {
   .content {
     width: 90%;
