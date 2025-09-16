@@ -32,7 +32,10 @@ function TodoList() {
       setLoadingAI(true);
 
       try {
-        const response = await generateTodo(aiPrompt);
+        const response = await generateTodo(
+          aiPrompt,
+          process.env.NEXT_PUBLIC_OPENAI_API_KEY!,
+        );
         response.forEach((text: string) => add(text));
       } catch (error) {
         console.error(error);

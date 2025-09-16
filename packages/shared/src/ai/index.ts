@@ -1,9 +1,12 @@
-export async function generateTodo(prompt: string): Promise<string[]> {
+export async function generateTodo(
+  prompt: string,
+  apiKey: string,
+): Promise<string[]> {
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: 'gpt-3.5-turbo',

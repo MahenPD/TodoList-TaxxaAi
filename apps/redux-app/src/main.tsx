@@ -20,13 +20,14 @@ function TodoList() {
   const dispatch = useDispatch();
   const [loadingAI, setLoadingAI] = useState(false);
   const { quote, loading } = useQuote();
+  const OPEN_API_KEY = import.meta.env.VITE_OPEN_API_KEY || '';
 
   const handleAIPrompt = useCallback(
     async (aiPrompt: string) => {
       setLoadingAI(true);
 
       try {
-        const todosFromAI = await generateTodo(aiPrompt);
+        const todosFromAI = await generateTodo(aiPrompt, OPEN_API_KEY);
         todosFromAI.forEach((text) => dispatch(add({ text })));
       } catch (error) {
         console.error(error);
