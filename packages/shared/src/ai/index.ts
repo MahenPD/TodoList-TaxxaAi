@@ -3,7 +3,7 @@ export async function generateTodo(prompt: string): Promise<string[]> {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer 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`,
     },
     body: JSON.stringify({
       model: 'gpt-3.5-turbo',
